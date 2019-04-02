@@ -10,7 +10,7 @@ I'm not particularly committed to this plugin so it's not on PyPi, but you can
 easily install it from this repo with:
 
 ```
-python3 -m pip install git+https://github.com/slarse/repobee-gofmt
+python3 -m pip install git+https://github.com/slarse/repobee-gofmt.git
 ```
 
 ### Usage
