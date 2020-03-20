@@ -11,7 +11,7 @@ with open("repobee_gofmt/__version.py", mode="r", encoding="utf-8") as f:
     assert re.match(r"^\d+(\.\d+){2}$", __version__)
 
 test_requirements = ["pytest", "repobee"]
-required = ["repobee-plug"]
+required = ["repobee-plug>=0.12.0"]
 
 setup(
     name="repobee-gofmt",

@@ -1,1 +1,1 @@
-repobee-plug
+repobee-plug>=0.12.0

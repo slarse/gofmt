@@ -14,7 +14,6 @@ import os
 import subprocess
 from typing import Union
 
-# this import you'll need
 import repobee_plug as plug
 
 PLUGIN_NAME = "gofmt"
@@ -37,16 +36,7 @@ def _run_gofmt(files):
     return ok, need_formatting
 
 
-@plug.repobee_hook
-def act_on_cloned_repo(path: Union[str, pathlib.Path], api) -> plug.HookResult:
-    """Return an error hookresult with a garbage message.
-    
-    Args:
-        path: Path to the student repo.
-            api: An instance of :py:class:`repobee.github_api.GitHubAPI`.
-    Returns:
-        a plug.HookResult specifying the outcome.
-    """
+def act(path: pathlib.Path, api: plug.API) -> plug.Result:
     path = pathlib.Path(path)
     gofiles = [
         p for p in path.resolve().rglob("*.go") if ".git" not in str(p).split(os.sep)
@@ -63,8 +53,13 @@ def act_on_cloned_repo(path: Union[str, pathlib.Path], api) -> plug.HookResult:
         + ["looks ok: " + str(file) for file in ok]
     )
 
-    return plug.HookResult(
-        hook=PLUGIN_NAME,
+    return plug.Result(
+        name=PLUGIN_NAME,
         status=plug.Status.SUCCESS if not need_formatting else plug.Status.ERROR,
         msg=msg,
     )
+
+
+@plug.repobee_hook
+def clone_task() -> plug.Task:
+    return plug.Task(act=act)
